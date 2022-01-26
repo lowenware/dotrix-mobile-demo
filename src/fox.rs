@@ -27,16 +27,6 @@ pub enum FoxAnimClip {
 }
 
 pub fn startup(mut world: Mut<World>, mut assets: Mut<Assets>) {
-    // iOS root path
-    let root_path = std::env::current_exe()
-        .map(|path| {
-            path.parent()
-                .map(|exe_parent_path| exe_parent_path.to_owned())
-                .unwrap()
-        })
-        .unwrap();
-    assets.set_root(root_path);
-
     assets.import("./assets/models/Fox.gltf");
     let texture = assets.register::<Texture>("Fox::fox::texture");
     let mesh = assets.register::<Mesh>("Fox::fox::mesh");

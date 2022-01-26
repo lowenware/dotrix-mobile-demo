@@ -4,7 +4,7 @@ use dotrix::math::{Point3, Vec3};
 use dotrix::pbr::{self, Light};
 use dotrix::prelude::*;
 use dotrix::{egui, overlay};
-use dotrix::{Camera, Color, System, World};
+use dotrix::{Assets, Camera, Color, System, World};
 use mobile_entry_point::mobile_entry_point;
 
 #[mobile_entry_point]
@@ -18,7 +18,17 @@ fn main() {
         .run();
 }
 
-pub fn startup(mut camera: Mut<Camera>, mut world: Mut<World>) {
+pub fn startup(mut assets: Mut<Assets>, mut camera: Mut<Camera>, mut world: Mut<World>) {
+    // iOS root path
+    let root_path = std::env::current_exe()
+        .map(|path| {
+            path.parent()
+                .map(|exe_parent_path| exe_parent_path.to_owned())
+                .unwrap()
+        })
+        .unwrap();
+    assets.set_root(root_path);
+
     camera.distance = 222.0;
     camera.y_angle = 0.74;
     camera.xz_angle = 0.25;
